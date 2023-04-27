@@ -1,7 +1,7 @@
-package com.amazonaws.example;
+package com.amazonaws.example
 
 import software.amazon.awscdk.services.glue.alpha._
-import software.amazon.awscdk.services.iam.{ManagedPolicy, Role, ServicePrincipal}
+import software.amazon.awscdk.services.iam.{IManagedPolicy, ManagedPolicy, Role, ServicePrincipal}
 import software.amazon.awscdk.services.s3.{Bucket, IBucket}
 import software.amazon.awscdk.{Stack, StackProps}
 import software.constructs.Construct
@@ -11,13 +11,13 @@ import scala.collection.JavaConverters._
 class GlueOsmCdkStack(scope: Construct, id: String, props: StackProps) extends Stack(scope, id, props) {
   def this(scope: Construct, id: String) = this(scope, id, null)
 
+  val policy: IManagedPolicy = ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSGlueServiceRole")
+
   val role: Role =
     Role.Builder
       .create(this, "GlueOsmJobRole")
       .assumedBy(new ServicePrincipal("glue.amazonaws.com"))
-      .managedPolicies(List(
-        ManagedPolicy.fromAwsManagedPolicyName("service-role/AWSGlueServiceRole")
-      ).asJava)
+      .managedPolicies(List(policy).asJava)
       .build()
 
   val osmBucket: IBucket = Bucket.fromBucketName(this, "OsmBucket", "osm-pds")
