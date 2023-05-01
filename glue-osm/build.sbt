@@ -1,3 +1,5 @@
+name := "glue-osm"
+
 resolvers ++= Seq(
   "aws-glue-etl-artifacts" at "https://aws-glue-etl-artifacts.s3.amazonaws.com/release/",
   "osgeo" at "https://repo.osgeo.org/repository/release"

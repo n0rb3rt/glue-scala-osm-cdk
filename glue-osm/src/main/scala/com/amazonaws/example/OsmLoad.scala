@@ -58,11 +58,13 @@ object OsmLoad {
         .groupBy("way_id")
         .agg(
           first("way_tags").as("way_tags"),
-          st_makeLine(transform(
+          transform(
             array_sort(collect_list(struct("idx", "geom"))),
             (elem, _) => elem.getField("geom")
-          )).as("geom")
+          ).as("geoms")
         )
+        .where(size($"geoms") >= 2)
+        .select($"way_id", $"way_tags", st_makeLine($"geoms").as("geom"))
 
     Functions.writeGeomesaFeature("ReferencedWays", referencedWays, datastoreParams, "xz2-8bit")
 
