@@ -39,6 +39,7 @@ class GlueOsmCdkStack(scope: Construct, id: String, props: StackProps) extends S
 
   val jobArgs: Map[String, String] = Map(
     "--enable-continuous-cloudwatch-log" -> "true",
+    "--enable-auto-scaling" -> "true",
     "--output_bucket" -> outputBucket.getBucketName
   )
 
@@ -49,5 +50,7 @@ class GlueOsmCdkStack(scope: Construct, id: String, props: StackProps) extends S
       .executable(JobExecutable.scalaEtl(executableProps))
       .defaultArguments(jobArgs.asJava)
       .role(role)
+      .workerCount(10)
+      .workerType(WorkerType.G_2_X)
       .build()
 }

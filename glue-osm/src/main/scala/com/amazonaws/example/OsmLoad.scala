@@ -36,8 +36,8 @@ object OsmLoad {
     val nodes =
       planet
         .where($"type" === "node" &&
-          $"lon".between(47.4, 47.8) &&
-          $"lat".between(-122.5, -122.2)
+          $"lon".between(-122.45, -122.25) &&
+          $"lat".between(47.5, 47.7)
         )
         .withColumn("geom", st_makePoint($"lon", $"lat"))
         .selectExpr("id as node_id", "geom")
