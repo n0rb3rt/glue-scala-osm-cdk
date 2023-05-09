@@ -1,6 +1,5 @@
-#!/bin/bash
-
 #https://www.geomesa.org/documentation/stable/user/filesystem/install.html#installing-geomesa-filesystem-in-geoserver
+
 set -x
 
 GEOSERVER_VERSION="2.17.3"
@@ -9,27 +8,40 @@ GEOMESA_VERSION="3.5.0"
 GEOSERVER_URL=https://sourceforge.net/projects/geoserver/files/GeoServer
 GEOMESA_URL=https://github.com/locationtech/geomesa/releases/download
 
+GEOSERVER_HOME=geoserver-${GEOSERVER_VERSION}
+GEOSERVER_WEBINF=${GEOSERVER_HOME}/webapps/geoserver/WEB-INF
+GEOMESA_HOME=geomesa-fs_2.12-${GEOMESA_VERSION}
+
 cd ${HOME}
 
 sudo yum install -y java-11-amazon-corretto
 
-export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64/
+wget ${GEOSERVER_URL}/${GEOSERVER_VERSION}/${GEOSERVER_HOME}-bin.zip
 
-export GEOSERVER_HOME=${HOME}/geoserver-${GEOSERVER_VERSION}
+wget ${GEOMESA_URL}/geomesa-${GEOMESA_VERSION}/${GEOMESA_HOME}-bin.tar.gz
 
-wget ${GEOSERVER_URL}/${GEOSERVER_VERSION}/geoserver-${GEOSERVER_VERSION}-bin.zip
+unzip ${GEOSERVER_HOME}-bin.zip -d ${GEOSERVER_HOME}
 
-wget ${GEOMESA_URL}/geomesa-${GEOMESA_VERSION}/geomesa-fs_2.12-${GEOMESA_VERSION}-bin.tar.gz
+tar xvf ${GEOMESA_HOME}-bin.tar.gz
 
-unzip geoserver-${GEOSERVER_VERSION}-bin.zip -d geoserver-${GEOSERVER_VERSION}
+tar xzvf ${GEOMESA_HOME}/dist/gs-plugins/geomesa-fs-gs-plugin_2.12-${GEOMESA_VERSION}-install.tar.gz \
+  -C ${GEOSERVER_WEBINF}/lib
 
-tar xvf geomesa-fs_2.12-${GEOMESA_VERSION}-bin.tar.gz
+echo "Y" | sh ${GEOMESA_HOME}/bin/install-dependencies.sh ${GEOSERVER_WEBINF}/lib
 
-tar -xzvf \
-  geomesa-fs_2.12-${GEOMESA_VERSION}/dist/gs-plugins/geomesa-fs-gs-plugin_2.12-${GEOMESA_VERSION}-install.tar.gz \
-  -C geoserver-${GEOSERVER_VERSION}/webapps/geoserver/WEB-INF/lib
+rm ${GEOSERVER_WEBINF}/lib/jackson-core-2.10.1.jar
 
-echo "Y" | sh geomesa-fs_2.12-${GEOMESA_VERSION}/bin/install-dependencies.sh --no-prompt \
-  geoserver-${GEOSERVER_VERSION}/webapps/geoserver/WEB-INF/lib
+cat << EOF > ${GEOSERVER_WEBINF}/classes/core-site.xml
+<?xml version="1.0"?>
+<configuration>
+<property>
+  <name>fs.s3a.aws.credentials.provider</name>
+  <value>com.amazonaws.auth.InstanceProfileCredentialsProvider</value>
+</property>
+</configuration>
+EOF
 
-JAVA_OPTS=-Xmx8g geoserver-${GEOSERVER_VERSION}/bin/startup.sh &
+GEOSERVER_HOME=${HOME}/geoserver-${GEOSERVER_VERSION} \
+  JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64 \
+  JAVA_OPTS=-Xmx8g \
+  geoserver-${GEOSERVER_VERSION}/bin/startup.sh &
