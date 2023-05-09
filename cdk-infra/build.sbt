@@ -8,8 +8,6 @@ libraryDependencies ++= Seq(
   "software.constructs" % "constructs" % "10.1.280"
 )
 
-mainClass := Some("com.amazonaws.example.GlueOsmCdkApp")
-
 buildInfoKeys := Seq[BuildInfoKey](version)
 
 buildInfoPackage := organization.value
