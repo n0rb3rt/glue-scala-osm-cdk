@@ -62,7 +62,7 @@ object OsmLoad {
      * |-- visible: boolean (nullable = true)
      */
 
-    val nodes: Dataset[Row] =
+    val nodes: DataFrame =
       planet
         .where(
           $"type" === "node" &&
@@ -78,7 +78,7 @@ object OsmLoad {
      * |-- geom: point (nullable = true)
      */
 
-    val ways: Dataset[Row] =
+    val ways: DataFrame =
       planet
         .where($"type" === "way" && $"tags.highway".isNotNull)
         .selectExpr("id as way_id", "tags as way_tags", "posexplode(nds.ref) as (idx, node_id)")
