@@ -1,6 +1,6 @@
 package com.amazonaws.example
 
-import org.apache.spark.sql.DataFrame
+import org.apache.spark.sql.{DataFrame, SaveMode}
 import org.geotools.data.DataStoreFinder
 import org.locationtech.geomesa.spark.sql.SparkUtils
 
@@ -24,6 +24,7 @@ object Functions extends Serializable {
     ds.createSchema(sft)
 
     df.write
+      .mode(SaveMode.Overwrite)
       .format("geomesa")
       .options(dsParams)
       .option("geomesa.feature", name)

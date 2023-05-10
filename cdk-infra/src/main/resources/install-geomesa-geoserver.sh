@@ -13,9 +13,12 @@ GEOSERVER_PATH=geoserver-${GEOSERVER_VERSION}
 GEOMESA_PATH=geomesa-fs_2.12-${GEOMESA_VERSION}
 GEOSERVER_WEBINF=${GEOSERVER_PATH}/webapps/geoserver/WEB-INF
 
-cd ${HOME}
+export GEOSERVER_HOME=${HOME}/${GEOSERVER_PATH}
+export JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64
 
 sudo yum install -y java-11-amazon-corretto
+
+cd ${HOME}
 
 wget ${GEOSERVER_URL}/${GEOSERVER_VERSION}/${GEOSERVER_PATH}-bin.zip
 
@@ -44,7 +47,4 @@ cat << EOF > ${GEOSERVER_WEBINF}/classes/core-site.xml
 </configuration>
 EOF
 
-GEOSERVER_HOME=${HOME}/${GEOSERVER_PATH} \
-  JAVA_HOME=/usr/lib/jvm/java-11-amazon-corretto.x86_64 \
-  JAVA_OPTS=-Xmx8g \
-  geoserver-${GEOSERVER_VERSION}/bin/startup.sh &
+JAVA_OPTS=-Xmx8g geoserver-${GEOSERVER_VERSION}/bin/startup.sh &
