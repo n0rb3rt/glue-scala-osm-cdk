@@ -71,7 +71,6 @@ object OsmLoad {
         )
         .withColumn("geom", st_makePoint($"lon", $"lat"))
         .selectExpr("id as node_id", "geom")
-        .repartition($"node_id")
 
     /**
      * root
@@ -83,7 +82,6 @@ object OsmLoad {
       planet
         .where($"type" === "way" && $"tags.highway".isNotNull)
         .selectExpr("id as way_id", "tags as way_tags", "posexplode(nds.ref) as (idx, node_id)")
-        .repartition($"node_id")
 
     /**
      * root

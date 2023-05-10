@@ -47,4 +47,4 @@ cat << EOF > ${GEOSERVER_WEBINF}/classes/core-site.xml
 </configuration>
 EOF
 
-JAVA_OPTS=-Xmx8g geoserver-${GEOSERVER_VERSION}/bin/startup.sh &
+JAVA_OPTS=-Xmx8g ${GEOSERVER_PATH}/bin/startup.sh &

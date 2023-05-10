@@ -11,3 +11,5 @@ libraryDependencies ++= Seq(
 buildInfoKeys := Seq[BuildInfoKey](version)
 
 buildInfoPackage := organization.value
+
+Compile / run / mainClass := Some("com.amazonaws.example.GlueOsmCdkApp")

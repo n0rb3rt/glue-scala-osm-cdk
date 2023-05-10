@@ -44,7 +44,7 @@ class GeoServerEc2Construct(scope: Construct, id: String, bucket: Bucket) extend
 
   val instance: Instance =
     Instance.Builder
-      .create(this, s"$id-ec2")
+      .create(this, s"$id-instance")
       .machineImage(image)
       .securityGroup(securityGroup)
       .instanceType(instanceType)
