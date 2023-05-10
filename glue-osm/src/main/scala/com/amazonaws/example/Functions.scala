@@ -2,7 +2,7 @@ package com.amazonaws.example
 
 import org.apache.spark.sql.DataFrame
 import org.geotools.data.DataStoreFinder
-import org.locationtech.geomesa.spark.SparkUtils
+import org.locationtech.geomesa.spark.sql.SparkUtils
 
 import scala.collection.JavaConverters._
 

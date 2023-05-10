@@ -8,5 +8,5 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
   "com.amazonaws" % "AWSGlueETL" % "3.0.0" % "provided",
   "com.typesafe.scala-logging" %% "scala-logging" % "3.9.5" % "provided",
-  "org.locationtech.geomesa" %% "geomesa-fs-spark-runtime" % "3.5.0" excludeAll ("*")
+  "org.locationtech.geomesa" %% "geomesa-fs-spark-runtime" % "4.0.1" excludeAll ("*")
 )
