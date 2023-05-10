@@ -81,8 +81,7 @@ object OsmLoad {
 
     val ways: Dataset[Row] =
       planet
-        .where($"type" === "way")
-        .filter($"tags.highway".isNotNull)
+        .where($"type" === "way" && $"tags.highway".isNotNull)
         .selectExpr("id as way_id", "tags as way_tags", "posexplode(nds.ref) as (idx, node_id)")
         .repartition($"node_id")
 
