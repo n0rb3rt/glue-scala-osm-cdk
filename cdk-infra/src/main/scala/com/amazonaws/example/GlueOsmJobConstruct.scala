@@ -1,6 +1,6 @@
 package com.amazonaws.example
 
-import software.amazon.awscdk.services.glue.alpha.{AssetCode, Code, GlueVersion, Job, JobExecutable, ScalaJobExecutableProps, WorkerType}
+import software.amazon.awscdk.services.glue.alpha._
 import software.amazon.awscdk.services.iam.{IManagedPolicy, ManagedPolicy, Role, ServicePrincipal}
 import software.amazon.awscdk.services.s3.{Bucket, IBucket}
 import software.constructs.Construct
