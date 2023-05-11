@@ -17,5 +17,7 @@ A [geohash](https://en.wikipedia.org/wiki/Geohash) is one such application of a 
 [GeoMesa](https://www.geomesa.org/) is an open source suite of tools that enables large-scale geospatial querying and analytics on distributed computing systems. It provides a convenient library for Spark that enables Spark SQL and Glue jobs to support geospatial functions and data.  And can write geospatially partitioned data into S3 and can be used in Jupyter Notebooks.  Stored data can also be read by GeoServer through a GeoMesa plugin.  This provides a powerful set of tools for performing large-scale geospatial analysis and serving the data to visualization tools like web applications, GIS packages, and interactive analysis.
 
 <img src="https://www.geomesa.org/documentation/stable/_images/jupyter-leaflet.png" width="400">
+
 ### CDK
 This project uses AWS CDK to build and provision an example Glue Job and an EC2 instance with GeoMesa-enabled GeoServer.
+
