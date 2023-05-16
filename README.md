@@ -46,7 +46,7 @@ Connect to the GeoServer instance at `https://<ec2-instance-address>:8080/geoser
 
 ![New Filesystem Datastore](img/new_datastore.png)
 
-And provide the location of the S3 data in the bucket created by CDK and written by the Glue job `s3a://<glue-osm-scala-cdk-bucket>/osm.  It is important to use the 's3a' schema for the bucket location:
+And provide the location of the S3 data in the bucket created by CDK and written by the Glue job `s3a://<glue-osm-scala-cdk-bucket>/osm`.  It is important to use the 's3a' schema for the bucket location:
 
 ![New Source](img/new_vector_source.png)
 
